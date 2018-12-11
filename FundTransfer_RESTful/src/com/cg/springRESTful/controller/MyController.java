@@ -15,11 +15,16 @@ public class MyController {
 	@Autowired
 	IWalletService service;
 	
-	@RequestMapping(value ="/wallet/fundtransfer/{fromId,toId,amount}",headers="Accept=application/json",method = RequestMethod.GET)
-	public void fundTransfer(@PathVariable("cId") int customer1,@PathVariable("cId") int customer2,@RequestBody double amount){
-		
-		boolean result = service.fundTransfer(customer1,customer2,amount);
-		if(result)
+	@RequestMapping(value ="/fundtransfer/{fromId}/{toId}/{amount}",headers="Accept=application/json",method = RequestMethod.GET)
+	public String fundTransfer(@PathVariable("fromId") int customerId1,@PathVariable("toId") int customerId2,@PathVariable("amount") double amount){
+		System.out.println(customerId1);
+		System.out.println(customerId2);
+		System.out.println(amount);
+		boolean result = service.fundTransfer(customerId1,customerId2,amount);
+		if(result){
 		System.out.println("Transfer done...!!");
+		return "fund transfer successfull";
+	}
+		return "fund transfer failed"; 
 	}
 }
